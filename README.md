@@ -27,6 +27,17 @@ I recommend these two tutorials from Programming for People to start out.
 
 ![Enable Laser Output](http://prim8.net/files/Wickedlasers/enable_output.png)
 
+## macOS Port
+
+This project was originally Windows-only. The macOS compatibility was added by Colin Stokes, enabling cross-platform support for both Intel and Apple Silicon Macs.
+
+The macOS port includes:
+- Cross-platform CMake build system
+- Fixed string functions for macOS compatibility
+- Proper library linking with libusb and laserdocklib
+- TouchDesigner parameter and output channel fixes
+- Updated documentation and build instructions
+
 ## Building from Source
 
 This project now supports macOS in addition to Windows. To build from source:
