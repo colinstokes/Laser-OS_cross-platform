@@ -109,16 +109,23 @@ Laser_OS_CHOP::getGeneralInfo(CHOP_GeneralInfo* ginfo, const OP_Inputs* inputs, 
 bool
 Laser_OS_CHOP::getOutputInfo(CHOP_OutputInfo* info, const OP_Inputs* inputs, void* reserved1) {
 	if (inputs->getNumInputs() > 0) {
-		return false;
+		info->numChannels = 5;
+		info->sampleRate = inputs->getInputCHOP(0)->sampleRate;
+		return true;
 	}
-	return true;
+	return false;
 }
 
 void
 Laser_OS_CHOP::getChannelName(int32_t index, OP_String* name, const OP_Inputs* inputs, void* reserved1)
 {
-	// unless getOutputInfo sets up channels, this won't be called.
-	name->setString("chan1");
+	// Output channel names
+	const char* channelNames[] = {"x", "y", "r", "g", "b"};
+	if (index >= 0 && index < 5) {
+		name->setString(channelNames[index]);
+	} else {
+		name->setString("unknown");
+	}
 }
 
 int32_t
@@ -206,7 +213,11 @@ Laser_OS_CHOP::setupParameters(OP_ParameterManager* manager, void* reserved1)
 			printf("%s\n", d);
 			int nsize = 16;
 			char* name = (char*) malloc(sizeof(char) * nsize);
+#ifdef _WIN32
 			sprintf_s(name, nsize, "Wicked%d", iX);
+#else
+			snprintf(name, nsize, "Wicked%d", iX);
+#endif
 			names_strs.push_back(name);
 			labels_strs.push_back(d);
 			free(d);
@@ -294,6 +305,21 @@ Laser_OS_CHOP::setupParameters(OP_ParameterManager* manager, void* reserved1)
 		np.defaultValues[0] = 1.0;
 		np.minSliders[0] = 0.0;
 		np.maxSliders[0] = 1.0;
+
+		OP_ParAppendResult res = manager->appendFloat(np);
+		assert(res == OP_ParAppendResult::Success);
+	}
+	// inputrate (parameter showing input sample rate)
+	{
+		OP_NumericParameter	np;
+
+		np.name = "inputrate";
+		np.label = "Input Sample Rate";
+		np.defaultValues[0] = 0.0;
+		np.minValues[0] = 0.0;
+		np.maxValues[0] = 100000.0;
+		np.minSliders[0] = 0.0;
+		np.maxSliders[0] = 100000.0;
 
 		OP_ParAppendResult res = manager->appendFloat(np);
 		assert(res == OP_ParAppendResult::Success);

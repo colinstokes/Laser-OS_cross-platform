@@ -2,7 +2,7 @@
 
 [TouchDesigner](https://derivative.ca/) is a node based programming environment for creative coding. This plugin provides driver support for LaserCube and LaserDock within TouchDesigner.
 
-Currently Supported: Windows 64 bit
+Currently Supported: Windows 64 bit, macOS (Intel and Apple Silicon)
 
 ## Intro to TouchDesigner
 
@@ -27,6 +27,24 @@ I recommend these two tutorials from Programming for People to start out.
 
 ![Enable Laser Output](http://prim8.net/files/Wickedlasers/enable_output.png)
 
+## Building from Source
+
+This project now supports macOS in addition to Windows. To build from source:
+
+### Prerequisites
+- CMake
+- C++ compiler (Xcode on macOS)
+- libusb (installed via conda or system package manager)
+
+### Building on macOS
+1. Clone the repository and submodules
+2. Create a conda environment: `conda create -n laseros-dev python=3.9 cmake libusb -y`
+3. Activate the environment: `conda activate laseros-dev`
+4. Build laserdocklib: `cd laserdocklib && mkdir build && cd build && cmake .. && make`
+5. Copy the built liblaserdocklib.dylib to the CPlusPlus/lib directory
+6. Build the TouchDesigner plugin: `cd ../CPlusPlus && mkdir build && cd build && cmake .. && make`
+7. Copy the built plugin files to TouchDesigner/Plugins/
+
 ## Installing the Plugin
 
 You can run a TouchDesigner .toe file from the same location as the Laser OS **Plugins** directory, or you can install your plugins to use in all TouchDesigner projects on your computer.
@@ -34,6 +52,7 @@ You can run a TouchDesigner .toe file from the same location as the Laser OS **P
 To install on your system, copy the contents of **Plugins** into:
 
 - Windows - Documents\Derivative\Plugins, usually C:\Users\<username>\Documents\Derivative\Plugins
+- macOS - Documents/Derivative/Plugins, usually /Users/<username>/Documents/Derivative/Plugins
 
 For more information, please see: <https://docs.derivative.ca/Custom_Operators>
 

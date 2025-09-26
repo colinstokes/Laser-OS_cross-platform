@@ -1,0 +1,3 @@
+/Users/colinstokes/Documents/C++ Projects/LaserOS/Laser_OS_TouchDesigner/CPlusPlus/build/CMakeFiles/LaserOS_CHOP.dir
+/Users/colinstokes/Documents/C++ Projects/LaserOS/Laser_OS_TouchDesigner/CPlusPlus/build/CMakeFiles/edit_cache.dir
+/Users/colinstokes/Documents/C++ Projects/LaserOS/Laser_OS_TouchDesigner/CPlusPlus/build/CMakeFiles/rebuild_cache.dir
